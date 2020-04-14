@@ -11,6 +11,7 @@ import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
+import com.vaadin.flow.component.tabs.TabsVariant;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.RouterLink;
@@ -36,6 +37,7 @@ public class MainView extends AppLayout implements BeforeEnterObserver {
 
         addToDrawer(tabs);
         addToNavbar(new Label("personal finances"), imageCoins);
+
 
     }
 
