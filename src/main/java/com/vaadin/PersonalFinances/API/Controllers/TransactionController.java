@@ -1,15 +1,12 @@
-package com.vaadin.PersonalFinances.Controllers;
+package com.vaadin.PersonalFinances.API.Controllers;
 
 
-import com.vaadin.PersonalFinances.Services.TransactionService;
-import com.vaadin.PersonalFinances.Services.UserService;
-import com.vaadin.PersonalFinances.models.Transaction;
-import com.vaadin.PersonalFinances.models.User;
+import com.vaadin.PersonalFinances.API.Services.TransactionService;
+import com.vaadin.PersonalFinances.API.models.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
-import java.util.Date;
 
 @RestController
 @RequestMapping("/api/transactions")
@@ -22,10 +19,10 @@ public class TransactionController {
         return transactionService.getTransactions();
     }
 
-    @PostMapping
+    /*@PostMapping
     public Transaction postUser(@RequestBody Transaction transaction){
         Date date = new Date();
         transaction.setDate(date);
         return transactionService.createTransaction(transaction);
-    }
+    }*/
 }

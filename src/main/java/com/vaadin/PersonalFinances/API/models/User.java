@@ -1,4 +1,4 @@
-package com.vaadin.PersonalFinances.models;
+package com.vaadin.PersonalFinances.API.models;
 
 //package com.example.accessingdatamongodb;
 

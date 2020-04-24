@@ -1,7 +1,6 @@
-package com.vaadin.PersonalFinances.Repositories;
+package com.vaadin.PersonalFinances.API.Repositories;
 
-import com.vaadin.PersonalFinances.models.User;
-import com.vaadin.PersonalFinances.models.Wallet;
+import com.vaadin.PersonalFinances.API.models.Wallet;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface WalletRepository extends MongoRepository<Wallet, String> {

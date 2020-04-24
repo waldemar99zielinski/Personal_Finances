@@ -1,10 +1,7 @@
-package com.vaadin.PersonalFinances.models;
+package com.vaadin.PersonalFinances.API.models;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.aggregation.DateOperators;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.format.annotation.DateTimeFormat;
 
 
 import java.math.BigDecimal;
@@ -84,7 +81,7 @@ public class Transaction {
     }
 
     public void setWalletId(String walletId) {
-        walletId = walletId;
+        this.walletId = walletId;
     }
 
     public Date getDate() {

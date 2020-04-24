@@ -1,7 +1,7 @@
-package com.vaadin.PersonalFinances.Services;
+package com.vaadin.PersonalFinances.API.Services;
 
-import com.vaadin.PersonalFinances.Repositories.UserRepository;
-import com.vaadin.PersonalFinances.models.User;
+import com.vaadin.PersonalFinances.API.Repositories.UserRepository;
+import com.vaadin.PersonalFinances.API.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

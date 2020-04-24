@@ -1,9 +1,8 @@
-package com.vaadin.PersonalFinances.Controllers;
+package com.vaadin.PersonalFinances.API.Controllers;
 
 
-import com.vaadin.PersonalFinances.Services.UserService;
-import com.vaadin.PersonalFinances.models.User;
-import org.atmosphere.config.service.Get;
+import com.vaadin.PersonalFinances.API.Services.UserService;
+import com.vaadin.PersonalFinances.API.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

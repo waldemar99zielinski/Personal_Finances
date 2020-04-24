@@ -1,10 +1,9 @@
-package com.vaadin.PersonalFinances.Controllers;
+package com.vaadin.PersonalFinances.API.Controllers;
 
-import com.vaadin.PersonalFinances.Services.TransactionService;
-import com.vaadin.PersonalFinances.Services.WalletService;
-import com.vaadin.PersonalFinances.models.Transaction;
-import com.vaadin.PersonalFinances.models.User;
-import com.vaadin.PersonalFinances.models.Wallet;
+import com.vaadin.PersonalFinances.API.Services.TransactionService;
+import com.vaadin.PersonalFinances.API.Services.WalletService;
+import com.vaadin.PersonalFinances.API.models.Transaction;
+import com.vaadin.PersonalFinances.API.models.Wallet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,7 +42,9 @@ public class WalletController {
     }
     @PostMapping(value = "/{walletId}/transactions")
     public Transaction postWalletTransaction(@PathVariable("walletId") String walletId, @RequestBody Transaction transaction){
+
         transaction.setWalletId(walletId);
+
         return transactionService.createTransaction(transaction);
     }
 

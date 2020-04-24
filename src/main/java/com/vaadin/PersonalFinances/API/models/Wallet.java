@@ -1,4 +1,4 @@
-package com.vaadin.PersonalFinances.models;
+package com.vaadin.PersonalFinances.API.models;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -15,11 +15,21 @@ public class Wallet {
     public Wallet() {
         this.balance = BigDecimal.ZERO;
     }
+
     public String getId(){
         return this.id;
     }
+
     public BigDecimal getBalance(){
         return this.balance;
     }
 
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
+    }
+    public void setBalanceAddingTransaction(BigDecimal balance) {
+
+        this.balance = this.balance.add(balance);
+
+    }
 }

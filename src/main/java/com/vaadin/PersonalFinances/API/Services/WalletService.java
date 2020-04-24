@@ -1,12 +1,11 @@
-package com.vaadin.PersonalFinances.Services;
+package com.vaadin.PersonalFinances.API.Services;
 
-import com.vaadin.PersonalFinances.Repositories.UserRepository;
-import com.vaadin.PersonalFinances.Repositories.WalletRepository;
-import com.vaadin.PersonalFinances.models.User;
-import com.vaadin.PersonalFinances.models.Wallet;
+import com.vaadin.PersonalFinances.API.Repositories.WalletRepository;
+import com.vaadin.PersonalFinances.API.models.Wallet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -33,6 +32,15 @@ public class WalletService {
         }
         return wallet;
     }
+    public Optional<Wallet> updateBalance(String id, BigDecimal amount){
+        Optional<Wallet> walletToUpdate = repository.findById(id);
+        if(walletToUpdate.isPresent()){
 
+            walletToUpdate.get().setBalanceAddingTransaction(amount);
+           
+            repository.save(walletToUpdate.get());
+        }
+        return walletToUpdate;
+    }
 
 }

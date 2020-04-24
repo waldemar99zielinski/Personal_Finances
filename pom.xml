@@ -43,6 +43,10 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
+        <repository>
+            <id>vaadin-addons</id>
+            <url>https://maven.vaadin.com/vaadin-addons</url>
+        </repository>
 
 
     </repositories>
@@ -140,6 +144,10 @@
             <groupId>org.vaadin.stefan</groupId>
             <artifactId>fullcalendar2</artifactId>
             <version>2.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
         </dependency>
     </dependencies>
 

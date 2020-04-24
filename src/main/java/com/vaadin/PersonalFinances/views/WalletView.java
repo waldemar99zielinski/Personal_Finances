@@ -1,8 +1,8 @@
 package com.vaadin.PersonalFinances.views;
 
 
-import com.vaadin.PersonalFinances.Application;
-import com.vaadin.PersonalFinances.Controllers.UserController;
+import com.vaadin.PersonalFinances.API.models.Wallet;
+import com.vaadin.PersonalFinances.UI_Controllers.UI_Http_Service;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.Paragraph;
@@ -10,24 +10,27 @@ import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.Label;
-import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.textfield.BigDecimalField;
-import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextFieldVariant;
 import com.vaadin.flow.router.Route;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
-
-import java.awt.*;
 import java.math.BigDecimal;
 
 @Route(value = "", layout = MainView.class)
 public class WalletView extends Div {
     BigDecimal balance;
+    @Autowired
+    private UI_Http_Service transactionService;
+
 
     public WalletView() {
+        transactionService = new UI_Http_Service();
+        transactionService.getAllWallets();
+        transactionService.getWallet("5e98a72d1322757e22280e4ea");
+        transactionService.postWallet(new Wallet());
         balance = BigDecimal.ZERO;
 
         HorizontalLayout layoutAccuntValue = new HorizontalLayout();
