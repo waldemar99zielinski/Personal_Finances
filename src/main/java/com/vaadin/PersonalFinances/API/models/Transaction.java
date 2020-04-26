@@ -25,7 +25,9 @@ public class Transaction {
     private BigDecimal amountOfMoney;
 
     private String walletId;
+    public Transaction(){
 
+    }
     public Transaction( String title, String category,Date date, String type, BigDecimal amountOfMoney, String walletId) {
 
         this.title = title;

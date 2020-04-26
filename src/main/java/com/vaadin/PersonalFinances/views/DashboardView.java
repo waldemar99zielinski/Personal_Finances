@@ -25,8 +25,7 @@ public class DashboardView extends VerticalLayout {
 
 
 
-        Html h = new Html("<p>Html</p>");
-        h.getElement().getStyle().set("font-size", "70px");
+
         //add(h);
        // add(label);
         Label firstLabel = new Label("First content component aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
@@ -37,6 +36,7 @@ public class DashboardView extends VerticalLayout {
 
         HorizontalLayout l1 = new HorizontalLayout();
         VerticalLayout c1 = new VerticalLayout();
+
         c1.addClassName("a");
         VerticalLayout c2 = new VerticalLayout();
         c2.addClassName("a");

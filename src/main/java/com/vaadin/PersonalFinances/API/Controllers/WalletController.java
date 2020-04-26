@@ -37,7 +37,7 @@ public class WalletController {
     }
     @GetMapping(value = "/{walletId}/transactions")
     public Collection<Transaction> getWalletTransactions(@PathVariable("walletId") String walletId){
-        System.out.println("wallet controller: "+ walletId );
+        //System.out.println("wallet controller: "+ walletId );
         return transactionService.getTransactionsForWallet(walletId);
     }
     @PostMapping(value = "/{walletId}/transactions")

@@ -1,5 +1,6 @@
 package com.vaadin.PersonalFinances.UI_Controllers;
 
+import com.vaadin.PersonalFinances.API.models.Transaction;
 import com.vaadin.PersonalFinances.API.models.Wallet;
 import org.atmosphere.config.service.Post;
 import org.springframework.http.HttpEntity;
@@ -24,7 +25,7 @@ public class UI_Http_Service {
         this.restTemplate = new RestTemplate();
     }
 
-    public void getAllWallets()
+    public List<Wallet> getAllWallets()
     {
         String url = UrlAPI + UrlWallets;
         //System.out.println("FULL URLS:"+ fullUrl);
@@ -33,19 +34,18 @@ public class UI_Http_Service {
 
       List<Wallet> walletsList = Arrays.asList(response);
 
-        System.out.println("dlusgosc: "+ walletsList.size()+" ");
+        //System.out.println("dlusgosc: "+ walletsList.size()+" ");
 
+        return walletsList;
     }
-    public void getWallet(String id){
+    public Wallet getWallet(String id){
         String url = UrlAPI + UrlWallets +id;
 
         Wallet response = restTemplate.getForObject(url, Wallet.class);
 
 
-        if(response == null){
-            System.out.println("puste");
-        }
-        //System.out.println("dlusgosc: "+ response.getId()+" ");
+
+       return response;
     }
     public Wallet postWallet(Wallet wallet){
         String url = UrlAPI + UrlWallets;
@@ -59,6 +59,32 @@ public class UI_Http_Service {
         HttpEntity<Wallet> enity = new HttpEntity<>(wallet, headers);
 
         return restTemplate.postForObject(url, enity, Wallet.class);
+    }
+    public Transaction postWalletTransaction(Transaction transaction, String WalletId){
+        String url = UrlAPI + UrlWallets +WalletId + "/transactions";
+
+        HttpHeaders headers = new HttpHeaders();
+        // set `content-type` header
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        // set `accept` header
+        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+
+        HttpEntity<Transaction> enity = new HttpEntity<>(transaction, headers);
+
+        return restTemplate.postForObject(url, enity, Transaction.class);
+    }
+    public List<Transaction> getWalletTransactions(String WalletId)
+    {
+        String url = UrlAPI + UrlWallets +WalletId + "/" + UrlTransactions;
+        //System.out.println("FULL URLS:"+ fullUrl);
+
+        Transaction[] response = restTemplate.getForObject(url, Transaction[].class);
+
+        List<Transaction> transactionsList = Arrays.asList(response);
+
+        //System.out.println("dlusgosc: "+ walletsList.size()+" ");
+
+        return transactionsList;
     }
     /*
     public void getOne(String endPoint, String id)

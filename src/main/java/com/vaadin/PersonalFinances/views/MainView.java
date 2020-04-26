@@ -12,6 +12,7 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.tabs.TabsVariant;
+
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.RouterLink;
@@ -27,6 +28,7 @@ public class MainView extends AppLayout implements BeforeEnterObserver {
     private Map<Class<? extends Component>, Tab> navigationTargetToTab = new HashMap<>();
 
     public MainView() {
+
         addMenuTab("Wallet", WalletView.class, new Icon(VaadinIcon.WALLET));
         addMenuTab("Admin", AdminView.class, new Icon(VaadinIcon.COG));
         addMenuTab("Dashboard", DashboardView.class,new Icon(VaadinIcon.COG));
@@ -36,7 +38,9 @@ public class MainView extends AppLayout implements BeforeEnterObserver {
         imageCoins.setHeight("44px");
 
         addToDrawer(tabs);
-        addToNavbar(new Label("personal finances"), imageCoins);
+
+        addToNavbar(new DrawerToggle(),new Label("personal finances"), imageCoins);
+
 
 
     }
