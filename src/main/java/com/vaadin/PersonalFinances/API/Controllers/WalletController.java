@@ -1,7 +1,9 @@
 package com.vaadin.PersonalFinances.API.Controllers;
 
+import com.vaadin.PersonalFinances.API.Services.StatisticsService;
 import com.vaadin.PersonalFinances.API.Services.TransactionService;
 import com.vaadin.PersonalFinances.API.Services.WalletService;
+import com.vaadin.PersonalFinances.API.models.Statistics;
 import com.vaadin.PersonalFinances.API.models.Transaction;
 import com.vaadin.PersonalFinances.API.models.Wallet;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,8 @@ public class WalletController {
     private WalletService walletService;
     @Autowired
     private TransactionService transactionService;
+    @Autowired
+    private StatisticsService statisticsService;
     @GetMapping
     public Collection<Wallet> getAllWallets(){
         return walletService.getWallets();
@@ -24,7 +28,7 @@ public class WalletController {
 
     @PostMapping
     public Wallet postWallet(@RequestBody Wallet wallet){
-        return walletService.createWallet(wallet);
+        return walletService.createWallet();
     }
 
     @GetMapping(value = "/{id}")
@@ -46,6 +50,10 @@ public class WalletController {
         transaction.setWalletId(walletId);
 
         return transactionService.createTransaction(transaction);
+    }
+    @GetMapping(value = "/{walletId}/statistics")
+    public Statistics getStatisticsForWallet(@PathVariable("walletId") String walletId){
+        return statisticsService.getExpenseStatisticsForWallet(walletId);
     }
 
 }

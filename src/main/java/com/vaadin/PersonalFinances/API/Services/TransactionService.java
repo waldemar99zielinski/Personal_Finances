@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,18 +23,17 @@ public class TransactionService {
     }
 
     public Transaction createTransaction(Transaction transaction) {
-        BigDecimal cost = transaction.getAmountOfMoney();
-        String walletId = transaction.getWalletId();
 
 
-        Optional<Wallet> wallet = walletService.updateBalance(walletId, transaction.getAmountOfMoney());
+
+        Optional<Wallet> wallet = walletService.updateBalance(transaction);
 
 
         //add exeptionHander
         return transactionRepository.insert(transaction);
     }
     public Collection<Transaction> getTransactionsForWallet(String walletId){
-
+       // List<Transaction> transactionList = //transactionRepository.findByWalletId(walletId);
 
         return transactionRepository.findByWalletId(walletId);
     }

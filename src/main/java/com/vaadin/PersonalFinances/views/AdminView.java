@@ -3,6 +3,7 @@ package com.vaadin.PersonalFinances.views;
 import com.vaadin.PersonalFinances.API.models.Transaction;
 import com.vaadin.PersonalFinances.UI_Controllers.UI_Http_Service;
 import com.vaadin.PersonalFinances.views.elements.LayoutTransactionInput;
+import com.vaadin.PersonalFinances.views.elements.LayoutTransactionsGrid;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.datepicker.DatePicker;
@@ -50,7 +51,41 @@ public class AdminView extends Div {
 
         layoutTransactionInput = new LayoutTransactionInput();
         VerticalLayout main = layoutTransactionInput.mainLayout();
-        add(main);
+
+        LayoutTransactionsGrid grid = new LayoutTransactionsGrid();
+
+        Tab tab1 = new Tab("Expenses");
+
+
+        Tab tab2 = new Tab("Tab two");
+        Div page2 = new Div();
+        page2.setText("Page#2");
+        page2.setVisible(false);
+
+        Tab tab3 = new Tab("Tab three");
+        Div page3 = new Div();
+        page3.setText("Page#3");
+        page3.setVisible(false);
+
+        Map<Tab, Component> tabsToPages = new HashMap<>();
+        tabsToPages.put(tab1, main);
+        tabsToPages.put(tab2, page2);
+        tabsToPages.put(tab3, page3);
+        Tabs tabs = new Tabs(tab1, tab2, tab3);
+        Div pages = new Div(main, page2, page3);
+        Set<Component> pagesShown = Stream.of(main)
+                .collect(Collectors.toSet());
+
+        tabs.addSelectedChangeListener(event -> {
+            //System.out.println("select");
+            pagesShown.forEach(page -> page.setVisible(false));
+            pagesShown.clear();
+            Component selectedPage = tabsToPages.get(tabs.getSelectedTab());
+            selectedPage.setVisible(true);
+            pagesShown.add(selectedPage);
+        });
+
+        add(tabs, pages);
 
     }
 

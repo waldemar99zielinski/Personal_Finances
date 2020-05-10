@@ -1,14 +1,17 @@
 package com.vaadin.PersonalFinances.views;
 
+import com.vaadin.PersonalFinances.views.elements.LayoutLogin;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
+import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.tabs.TabsVariant;
@@ -16,6 +19,8 @@ import com.vaadin.flow.component.tabs.TabsVariant;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.RouterLink;
+import org.springframework.boot.web.servlet.server.Session;
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,23 +31,30 @@ public class MainView extends AppLayout implements BeforeEnterObserver {
 
     private Tabs tabs = new Tabs();
     private Map<Class<? extends Component>, Tab> navigationTargetToTab = new HashMap<>();
-
+    Button login ;
     public MainView() {
 
         addMenuTab("Wallet", WalletView.class, new Icon(VaadinIcon.WALLET));
-        addMenuTab("Admin", AdminView.class, new Icon(VaadinIcon.COG));
-        addMenuTab("Dashboard", DashboardView.class,new Icon(VaadinIcon.COG));
+        addMenuTab("Add transaction", AdminView.class, new Icon(VaadinIcon.PLUS));
+        addMenuTab("List", TransactionListView.class,new Icon(VaadinIcon.LINES));
+        addMenuTab("Stats", DashboardView.class,new Icon(VaadinIcon.BAR_CHART));
         tabs.setOrientation(Tabs.Orientation.VERTICAL);
 
-        Image imageCoins = new Image("https://media0.giphy.com/media/NsAXBSpx0MJ6IBDCPY/source.gif", "coins");
-        imageCoins.setHeight("44px");
+
+
+        login = new Button("Login");
+
+        login.addClickListener(event -> new LayoutLogin().dialogAction());
 
         addToDrawer(tabs);
 
-        addToNavbar(new DrawerToggle(),new Label("personal finances"), imageCoins);
 
-
-
+        addToNavbar(new DrawerToggle(),new Label("personal finances"), login);
+        login.getStyle().set("margin-left", "auto");
+        /*
+        Dialog dialog = new Dialog();
+        dialog.open();
+        */
     }
 
     private void addMenuTab(String label, Class<? extends Component> target, Icon icon) {
@@ -55,6 +67,7 @@ public class MainView extends AppLayout implements BeforeEnterObserver {
     public void beforeEnter(BeforeEnterEvent event) {
         tabs.setSelectedTab(navigationTargetToTab.get(event.getNavigationTarget()));
     }
+
 }
 
 

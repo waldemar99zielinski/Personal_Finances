@@ -14,7 +14,9 @@
     "copy-webpack-plugin": "5.1.0",
     "webpack-merge": "4.2.2",
     "raw-loader": "3.0.0",
-    "compression-webpack-plugin": "3.0.1"
+    "compression-webpack-plugin": "3.0.1",
+    "@babel/core": "^7.8.7",
+    "yaml": "^1.7.2"
   },
-  "vaadinAppPackageHash": "e1bb8de19e2f3aceb5fcca98a74cfcef3d8a6295a8dcb7552d229c1be7a9a0aa"
+  "vaadinAppPackageHash": "9d9bc2480584d756ef263b6be0f25abb7e5600d603d5de175cb6381bcf3f322c"
 }

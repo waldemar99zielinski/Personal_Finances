@@ -1,6 +1,8 @@
 package com.vaadin.PersonalFinances.UI_Controllers;
 
+import com.vaadin.PersonalFinances.API.models.Statistics;
 import com.vaadin.PersonalFinances.API.models.Transaction;
+import com.vaadin.PersonalFinances.API.models.User;
 import com.vaadin.PersonalFinances.API.models.Wallet;
 import org.atmosphere.config.service.Post;
 import org.springframework.http.HttpEntity;
@@ -20,6 +22,8 @@ public class UI_Http_Service {
     private String UrlWallets = "wallets/";
     private String UrlUsers = "users/";
     private String UrlTransactions = "transactions/";
+    private String UrlStatistics = "statistics/";
+    private String UrlCookieSet = "users/setCookies/";
 
     public UI_Http_Service(){
         this.restTemplate = new RestTemplate();
@@ -86,6 +90,30 @@ public class UI_Http_Service {
 
         return transactionsList;
     }
+    public Statistics getStatisticsForWallet()
+    {
+        String url = UrlAPI + UrlWallets +new UserInfo().getWalletId() + "/" + UrlStatistics;
+        //System.out.println("FULL URLS:"+ url);
+
+        Statistics response = restTemplate.getForObject(url, Statistics.class);
+
+
+
+        return response;
+    }
+    public List<User> getAllUsers()
+    {
+        String url = UrlAPI + UrlUsers;
+        //System.out.println("FULL URLS:"+ url);
+
+        User[] response = restTemplate.getForObject(url, User[].class);
+
+        List<User> usersList = Arrays.asList(response);
+
+        //System.out.println("dlusgosc: "+ walletsList.size()+" ");
+
+        return usersList;
+    }
     /*
     public void getOne(String endPoint, String id)
     {
@@ -99,5 +127,26 @@ public class UI_Http_Service {
     public void post(String object){
 
     }*/
+    public User postUser(User user){
+        String url = UrlAPI + UrlUsers;
+
+        HttpHeaders headers = new HttpHeaders();
+        // set `content-type` header
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        // set `accept` header
+        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+
+        HttpEntity<User> enity = new HttpEntity<>(user, headers);
+
+        return restTemplate.postForObject(url, enity, User.class);
+    }
+    public void setCookies(User user){
+        String url = UrlAPI + "/users/change-username"; //+ user.getId();
+        System.out.println("setCookies UI_");
+
+
+
+        restTemplate.getForObject(url, String.class);
+    }
 
 }

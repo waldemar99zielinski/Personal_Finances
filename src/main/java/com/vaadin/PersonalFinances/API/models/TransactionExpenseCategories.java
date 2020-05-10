@@ -3,9 +3,9 @@ package com.vaadin.PersonalFinances.API.models;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TransactionCategories {
+public class TransactionExpenseCategories {
     private List<String> categories;
-    public TransactionCategories(){
+    public TransactionExpenseCategories(){
         categories = new ArrayList<>();
         this.categories.add("Housing");
         this.categories.add("Transport");
@@ -17,7 +17,13 @@ public class TransactionCategories {
         this.categories.add("Recreation");
 
     }
+    public String[] getCategoriesArray(){
+        String[] array = new String[categories.size()];
+        categories.toArray(array);
 
+        return array;
+
+    }
     public List<String> getCategories() {
         return categories;
     }

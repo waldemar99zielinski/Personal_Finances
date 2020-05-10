@@ -17,6 +17,10 @@ public class User {
 
     private String walletId;
 
+    public User(){
+
+    }
+
     public User(String firstName, String lastName, String walletId) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -41,6 +45,13 @@ public class User {
         return lastName;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
     public String getWalletId() {
         return walletId;

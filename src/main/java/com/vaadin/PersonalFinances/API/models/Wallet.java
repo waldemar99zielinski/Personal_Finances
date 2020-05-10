@@ -27,9 +27,17 @@ public class Wallet {
     public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
-    public void setBalanceAddingTransaction(BigDecimal balance) {
 
-        this.balance = this.balance.add(balance);
+    public void setBalanceAddingTransaction(Transaction transaction) {
+        //System.out.println("model Wallet: setBalanceAddingTransaction\ntransactionType: "+transaction.getType()+"\nenum output: "+TransactionType.EXPENSE.toString());
+        if(TransactionType.EXPENSE.toString().equals(transaction.getType())){
+            //System.out.println("model Wallet: setBalanceAddingTransaction :: expense");
+            this.balance = this.balance.subtract(transaction.getAmountOfMoney());
+        }else if(TransactionType.INCOME.toString().equals(transaction.getType())){
+            //System.out.println("model Wallet: setBalanceAddingTransaction :: income");
+            this.balance = this.balance.add(transaction.getAmountOfMoney());
+        }
+
 
     }
 }

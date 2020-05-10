@@ -1,10 +1,26 @@
-.a {
+.panel {
     overflow: auto;
-    border: 3px solid #1C6CD9;
-    border-radius: 10px;
+   border: 6px solid rgba(28,110,164,0.36);
+
     -webkit-box-shadow: 3px 3px 9px -1px rgba(0,0,0,0.83);
     box-shadow: 3px 3px 9px -1px rgba(0,0,0,0.83);
   }
+.accountBalace {
+    font-family: "Georgia", serif;
+    text-align: center;
+    font-size: 55px;
+    color:#1676f3;
+
+    text-shadow: rgba(28,110,164,0.5) 2px 2px 2px;
+}
+.money {
+    font-family: "Georgia", serif;
+    text-align: center;
+    font-size: 75px;
+    color: #1676f3;
+
+    text-shadow: rgba(28,110,164,0.5) 2px 2px 2px;
+}
 
  .text {
       font-family: Georgia, serif;

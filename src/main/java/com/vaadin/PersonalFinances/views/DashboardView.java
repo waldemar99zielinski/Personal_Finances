@@ -1,6 +1,20 @@
 package com.vaadin.PersonalFinances.views;
 
 
+
+
+import com.github.appreciated.apexcharts.ApexCharts;
+import com.github.appreciated.apexcharts.config.Chart;
+import com.github.appreciated.apexcharts.config.TitleSubtitle;
+import com.github.appreciated.apexcharts.config.chart.Type;
+import com.github.appreciated.apexcharts.config.chart.Zoom;
+import com.github.appreciated.apexcharts.config.subtitle.Align;
+import com.github.appreciated.apexcharts.helper.Series;
+import com.vaadin.PersonalFinances.API.models.Statistics;
+import com.vaadin.PersonalFinances.API.models.TransactionExpenseCategories;
+import com.vaadin.PersonalFinances.API.models.TransactionIncomeCategories;
+import com.vaadin.PersonalFinances.UI_Controllers.UI_WalletController;
+import com.vaadin.PersonalFinances.views.elements.LayoutTransactionsGrid;
 import com.vaadin.flow.component.Html;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.StyleSheet;
@@ -11,62 +25,67 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.splitlayout.SplitLayout;
 import com.vaadin.flow.router.Route;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.stefan.fullcalendar.Entry;
 import org.vaadin.stefan.fullcalendar.FullCalendar;
 import org.vaadin.stefan.fullcalendar.FullCalendarBuilder;
 
+
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Arrays;
 
 @Route(value = "dashboard", layout = MainView.class)
 @CssImport("./styles/style.css")
-public class DashboardView extends VerticalLayout {
+public class DashboardView extends Div {
+    private UI_WalletController walletController;
+
     public DashboardView() {
+        walletController = new UI_WalletController();
+
+        Statistics s = walletController.getWalletStatistics();
+
+        LayoutTransactionsGrid layoutTransactionsGrid = new LayoutTransactionsGrid();
+        VerticalLayout h1 = new VerticalLayout();
+        h1.add(layoutTransactionsGrid.getGrid(), new Label("asdf"));
+
+        // Our Apex chart
+        ApexCharts apexChart = new ApexCharts();
+
+
+        Integer[] data = Arrays.stream(s.getNumberByCategory())
+                                        .boxed()
+                                        .toArray(Integer[]::new);
+        // Series
+        Series<Integer> series = new Series<Integer>();
+        series.setData(data);
+
+        series.setName("a");
+
+        // Chart
+        Chart chart = new Chart();
+
+        chart.setType(Type.histogram);
+
+        chart.setHeight("350");
+        TitleSubtitle titleSubtilte = new TitleSubtitle();
+        titleSubtilte.setText("Product Trends by Month");
+        titleSubtilte.setAlign(Align.center);
+
+
+        // Include them all
+        apexChart.setSeries(series);
+        apexChart.setChart(chart);
+        apexChart.setTitle(titleSubtilte);
+        apexChart.setLabels(new TransactionExpenseCategories().getCategoriesArray());
+
+
+        // Render them and include into the content
+
+
+        add(apexChart);
 
 
 
-
-
-        //add(h);
-       // add(label);
-        Label firstLabel = new Label("First content component aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        Label secondLabel = new Label("Second content component");
-        secondLabel.addClassName("text");
-        Label thirdLabel = new Label("Third content component");
-        Label forthLabel = new Label("Forth content component");
-
-        HorizontalLayout l1 = new HorizontalLayout();
-        VerticalLayout c1 = new VerticalLayout();
-
-        c1.addClassName("a");
-        VerticalLayout c2 = new VerticalLayout();
-        c2.addClassName("a");
-        //
-        HorizontalLayout l2 = new HorizontalLayout();
-       c1.add(firstLabel);
-
-       c1.setSizeFull();
-
-       c2.add(secondLabel);
-       c2.setSizeFull();
-
-        l1.add( c1, c2);
-
-        l1.setSizeFull();
-        l2.add(thirdLabel,forthLabel);
-        l2.setSizeFull();
-        SplitLayout layout = new SplitLayout(
-                new Label("First content component"),
-                new Label("Second content component"));
-        setHeightFull();
-        setWidthFull();
-
-     /* setPrimaryStyle("maxWidth", "50%");
-        setPrimaryStyle("minWidth", "50%");
-      addToPrimary(firstLabel);
-
-      addToSecondary(secondLabel);
-
-      */
-      add(l1,l2);
     }
 }
