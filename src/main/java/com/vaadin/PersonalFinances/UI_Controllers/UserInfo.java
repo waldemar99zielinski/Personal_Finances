@@ -53,7 +53,7 @@ public class UserInfo {
             walletId = scanner.nextLine();
             scanner.close();
             //System.out.println("userInfo: loadCredentials:" +userId + " "+walletId);
-        }catch (Exception e){
+        }catch (IOException e){
             System.out.println(e.getMessage());
         }
     }
@@ -62,7 +62,7 @@ public class UserInfo {
             FileWriter fileWriter = new FileWriter("credentials.txt");
             fileWriter.write(user.getId()+ "\n" + user.getWalletId());
             fileWriter.close();
-        }catch (Exception e){
+        }catch (IOException e){
             System.out.println("userInfo: setCredentials\n"+e.getMessage());
         }
     }
