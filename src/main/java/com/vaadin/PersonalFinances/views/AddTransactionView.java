@@ -38,14 +38,14 @@ import java.util.stream.Stream;
 @Route(value = "admin", layout = MainView.class)
 @PageTitle("ASDF")
 @CssImport("./styles/style.css")
-public class AdminView extends Div {
+public class AddTransactionView extends Div {
 
     @Autowired
     private UI_Http_Service transactionService;
 
     private LayoutTransactionInput layoutTransactionInput;
 
-    public AdminView() {
+    public AddTransactionView() {
 
 
 

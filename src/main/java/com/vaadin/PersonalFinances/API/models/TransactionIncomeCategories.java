@@ -13,7 +13,16 @@ public class TransactionIncomeCategories {
 
 
     }
+    public String[] getCategoriesArray(){
+        String[] array = new String[categories.size()];
+        categories.toArray(array);
 
+        return array;
+
+    }
+    public int size(){
+        return categories.size();
+    }
     public List<String> getCategories() {
         return categories;
     }

@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TransactionService {
@@ -29,12 +30,28 @@ public class TransactionService {
         Optional<Wallet> wallet = walletService.updateBalance(transaction);
 
 
-        //add exeptionHander
+
         return transactionRepository.insert(transaction);
     }
     public Collection<Transaction> getTransactionsForWallet(String walletId){
        // List<Transaction> transactionList = //transactionRepository.findByWalletId(walletId);
 
         return transactionRepository.findByWalletId(walletId);
+    }
+    public Collection<Transaction> getExpenseTransactionsForWallet(String walletId){
+        Collection<Transaction> transactionList = transactionRepository.findByWalletId(walletId);
+
+        return transactionList
+                .stream()
+                .filter(e -> e.getType().equals("expense"))
+                .collect(Collectors.toList());
+    }
+    public Collection<Transaction> getIncomeTransactionsForWallet(String walletId){
+        Collection<Transaction> transactionList = transactionRepository.findByWalletId(walletId);
+
+        return transactionList
+                .stream()
+                .filter(e -> e.getType().equals("income"))
+                .collect(Collectors.toList());
     }
 }

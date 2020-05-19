@@ -21,6 +21,14 @@
 
     text-shadow: rgba(28,110,164,0.5) 2px 2px 2px;
 }
+.userinfo {
+    font-family: "Georgia", serif;
+    text-align: left;
+    font-size: 45px;
+    color: #1676f3;
+
+    text-shadow: rgba(28,110,164,0.5) 2px 2px 2px;
+}
 
  .text {
       font-family: Georgia, serif;

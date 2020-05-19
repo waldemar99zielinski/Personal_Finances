@@ -1,25 +1,20 @@
 package com.vaadin.PersonalFinances.views;
 
+import com.vaadin.PersonalFinances.UI_Controllers.CheckCredentials;
 import com.vaadin.PersonalFinances.views.elements.LayoutLogin;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.dependency.CssImport;
-import com.vaadin.flow.component.dialog.Dialog;
-import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
-import com.vaadin.flow.component.tabs.TabsVariant;
 
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.RouterLink;
-import org.springframework.boot.web.servlet.server.Session;
 
 
 import java.util.HashMap;
@@ -35,9 +30,9 @@ public class MainView extends AppLayout implements BeforeEnterObserver {
     public MainView() {
 
         addMenuTab("Wallet", WalletView.class, new Icon(VaadinIcon.WALLET));
-        addMenuTab("Add transaction", AdminView.class, new Icon(VaadinIcon.PLUS));
+        addMenuTab("Add transaction", AddTransactionView.class, new Icon(VaadinIcon.PLUS));
         addMenuTab("List", TransactionListView.class,new Icon(VaadinIcon.LINES));
-        addMenuTab("Stats", DashboardView.class,new Icon(VaadinIcon.BAR_CHART));
+        addMenuTab("Stats", StatsView.class,new Icon(VaadinIcon.BAR_CHART));
         tabs.setOrientation(Tabs.Orientation.VERTICAL);
 
 
@@ -51,10 +46,8 @@ public class MainView extends AppLayout implements BeforeEnterObserver {
 
         addToNavbar(new DrawerToggle(),new Label("personal finances"), login);
         login.getStyle().set("margin-left", "auto");
-        /*
-        Dialog dialog = new Dialog();
-        dialog.open();
-        */
+
+        new CheckCredentials();
     }
 
     private void addMenuTab(String label, Class<? extends Component> target, Icon icon) {

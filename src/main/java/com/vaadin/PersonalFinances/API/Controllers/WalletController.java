@@ -44,6 +44,16 @@ public class WalletController {
         //System.out.println("wallet controller: "+ walletId );
         return transactionService.getTransactionsForWallet(walletId);
     }
+    @GetMapping(value = "/{walletId}/transactions/expense")
+    public Collection<Transaction> getExpenseWalletTransactions(@PathVariable("walletId") String walletId){
+        //System.out.println("wallet controller: "+ walletId );
+        return transactionService.getTransactionsForWallet(walletId);
+    }
+    @GetMapping(value = "/{walletId}/transactions/income")
+    public Collection<Transaction> getIncomeWalletTransactions(@PathVariable("walletId") String walletId){
+        //System.out.println("wallet controller: "+ walletId );
+        return transactionService.getTransactionsForWallet(walletId);
+    }
     @PostMapping(value = "/{walletId}/transactions")
     public Transaction postWalletTransaction(@PathVariable("walletId") String walletId, @RequestBody Transaction transaction){
 
@@ -51,9 +61,13 @@ public class WalletController {
 
         return transactionService.createTransaction(transaction);
     }
-    @GetMapping(value = "/{walletId}/statistics")
-    public Statistics getStatisticsForWallet(@PathVariable("walletId") String walletId){
+    @GetMapping(value = "/{walletId}/statistics/expense")
+    public Statistics getExpenseStatisticsForWallet(@PathVariable("walletId") String walletId){
         return statisticsService.getExpenseStatisticsForWallet(walletId);
+    }
+    @GetMapping(value = "/{walletId}/statistics/income")
+    public Statistics getIncomeStatisticsForWallet(@PathVariable("walletId") String walletId){
+        return statisticsService.getIncomeStatisticsForWallet(walletId);
     }
 
 }

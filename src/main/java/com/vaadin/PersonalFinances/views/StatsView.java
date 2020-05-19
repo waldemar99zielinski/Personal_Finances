@@ -14,7 +14,9 @@ import com.vaadin.PersonalFinances.API.models.Statistics;
 import com.vaadin.PersonalFinances.API.models.TransactionExpenseCategories;
 import com.vaadin.PersonalFinances.API.models.TransactionIncomeCategories;
 import com.vaadin.PersonalFinances.UI_Controllers.UI_WalletController;
+import com.vaadin.PersonalFinances.views.elements.LayoutStats;
 import com.vaadin.PersonalFinances.views.elements.LayoutTransactionsGrid;
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Html;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.StyleSheet;
@@ -24,6 +26,8 @@ import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.splitlayout.SplitLayout;
+import com.vaadin.flow.component.tabs.Tab;
+import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.stefan.fullcalendar.Entry;
@@ -34,56 +38,50 @@ import org.vaadin.stefan.fullcalendar.FullCalendarBuilder;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Route(value = "dashboard", layout = MainView.class)
 @CssImport("./styles/style.css")
-public class DashboardView extends Div {
+public class StatsView extends Div {
     private UI_WalletController walletController;
 
-    public DashboardView() {
-        walletController = new UI_WalletController();
-
-        Statistics s = walletController.getWalletStatistics();
-
-        LayoutTransactionsGrid layoutTransactionsGrid = new LayoutTransactionsGrid();
-        VerticalLayout h1 = new VerticalLayout();
-        h1.add(layoutTransactionsGrid.getGrid(), new Label("asdf"));
-
-        // Our Apex chart
-        ApexCharts apexChart = new ApexCharts();
+    public StatsView() {
+        setSizeFull();
 
 
-        Integer[] data = Arrays.stream(s.getNumberByCategory())
-                                        .boxed()
-                                        .toArray(Integer[]::new);
-        // Series
-        Series<Integer> series = new Series<Integer>();
-        series.setData(data);
+        Tab tab2 = new Tab("Expenses");
+        Div page2 = new Div();
+        page2.add(new LayoutStats().expenses());
+        page2.setVisible(true);
 
-        series.setName("a");
+        Tab tab3 = new Tab("Incomes");
+        Div page3 = new Div();
+        page3.add(new LayoutStats().incomes());
+        page3.setVisible(false);
 
-        // Chart
-        Chart chart = new Chart();
+        Map<Tab, Component> tabsToPages = new HashMap<>();
 
-        chart.setType(Type.histogram);
+        tabsToPages.put(tab2, page2);
+        tabsToPages.put(tab3, page3);
+        Tabs tabs = new Tabs(tab2, tab3);
+        Div pages = new Div( page2, page3);
+        Set<Component> pagesShown = Stream.of(page2)
+                .collect(Collectors.toSet());
 
-        chart.setHeight("350");
-        TitleSubtitle titleSubtilte = new TitleSubtitle();
-        titleSubtilte.setText("Product Trends by Month");
-        titleSubtilte.setAlign(Align.center);
+        tabs.addSelectedChangeListener(event -> {
+            //System.out.println("select");
+            pagesShown.forEach(page -> page.setVisible(false));
+            pagesShown.clear();
+            Component selectedPage = tabsToPages.get(tabs.getSelectedTab());
+            selectedPage.setVisible(true);
+            pagesShown.add(selectedPage);
+        });
 
-
-        // Include them all
-        apexChart.setSeries(series);
-        apexChart.setChart(chart);
-        apexChart.setTitle(titleSubtilte);
-        apexChart.setLabels(new TransactionExpenseCategories().getCategoriesArray());
-
-
-        // Render them and include into the content
-
-
-        add(apexChart);
+        add(tabs, pages);
 
 
 

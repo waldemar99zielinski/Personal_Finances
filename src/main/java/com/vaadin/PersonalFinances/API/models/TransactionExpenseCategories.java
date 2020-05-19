@@ -24,6 +24,9 @@ public class TransactionExpenseCategories {
         return array;
 
     }
+    public int size(){
+        return categories.size();
+    }
     public List<String> getCategories() {
         return categories;
     }

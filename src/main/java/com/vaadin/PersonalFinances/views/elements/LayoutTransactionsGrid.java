@@ -15,20 +15,27 @@ public class LayoutTransactionsGrid {
     @Autowired
     private UI_Http_Service transactionService;
     private UserInfo userInfo;
-
+    private List<Transaction> expenses;
+    private List<Transaction> incomes;
     public LayoutTransactionsGrid(){
         this.transactionService = new UI_Http_Service();
         this.userInfo = new UserInfo();
+        populateTransacionGrid();
     }
-    public Grid getGrid(){
+
+    public Grid getGrid(String option){
 
 
 
-        List<Transaction> transactionList =  getTransactionList();
+
 
         Grid<Transaction> grid = new Grid<>();
+        if(option.equals("expenses")){
+            grid.setItems(expenses);
+        }else{
+            grid.setItems(incomes);
+        }
 
-        grid.setItems(transactionList);
         grid.addColumn(Transaction::getTitle).setHeader("Title");
         grid.addColumn(Transaction::getCategory).setHeader("Category");
         grid.addColumn(Transaction::getType).setHeader("Type");
@@ -45,12 +52,17 @@ public class LayoutTransactionsGrid {
         });
         return grid;
     }
-    private List<Transaction> getTransactionList(){
+    private void populateTransacionGrid(){
         try{
-            return transactionService.getWalletTransactions(userInfo.getWalletId());
-        }catch (Exception e){
+            //System.out.println("LayoutTransactionGrid: walletId"+ userInfo.getWalletId());
+            expenses = transactionService.getExpenseWalletTransactions();
+            incomes = transactionService.getIncomeWalletTransactions();
 
-            return new ArrayList<Transaction>();
+
+        }catch (Exception e){
+            System.out.println("LayoutTransactionGrid: populateTransactionGrid\n");
+            System.out.println(e.getMessage());
+
         }
     }
 }

@@ -14,6 +14,7 @@ public class UI_WalletController {
     public UI_WalletController(){
         this.service = new UI_Http_Service();
         this.userInfo = new UserInfo();
+        userInfo.loadCredentials();
     }
 
     public boolean createTransaction(Transaction transaction){
@@ -28,7 +29,16 @@ public class UI_WalletController {
 
         return service.getWallet(userInfo.getWalletId()).getBalance();
     }
-    public Statistics getWalletStatistics(){
-        return service.getStatisticsForWallet();
+    public Statistics getExpenseWalletStatistics(){
+        return service.getExpenseStatisticsForWallet();
+    }
+    public Statistics getIncomeWalletStatistics(){
+        return service.getIncomeStatisticsForWallet();
+    }
+    public String getFirstName(){
+        return service.getUser(userInfo.getUserId()).getFirstName();
+    }
+    public String getLastName(){
+        return service.getUser(userInfo.getUserId()).getLastName();
     }
 }

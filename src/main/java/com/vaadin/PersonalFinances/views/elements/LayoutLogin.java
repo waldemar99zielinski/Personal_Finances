@@ -2,6 +2,7 @@ package com.vaadin.PersonalFinances.views.elements;
 
 import com.vaadin.PersonalFinances.API.models.User;
 import com.vaadin.PersonalFinances.UI_Controllers.UI_Http_Service;
+import com.vaadin.PersonalFinances.UI_Controllers.UserInfo;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
@@ -17,6 +18,7 @@ import org.atmosphere.interceptor.AtmosphereResourceStateRecovery;
 public class LayoutLogin {
 
     UI_Http_Service service;
+    UserInfo userInfo;
 
     Grid<User> grid_users;
     TextField textField_userFirstName;
@@ -33,6 +35,7 @@ public class LayoutLogin {
     boolean isCurrentSignIn;
     public LayoutLogin(){
         service = new UI_Http_Service();
+        userInfo = new UserInfo();
         grid_users = new Grid<>();
 
         textField_userFirstName = new TextField();
@@ -104,10 +107,11 @@ public class LayoutLogin {
         grid_users.setItems(service.getAllUsers());
         grid_users.addColumn(User::getFirstName).setHeader("First name");
         grid_users.addColumn(User::getLastName).setHeader("Last name");
-
+        //TODO
         grid_users.addItemClickListener(event -> {
-           service.setCookies(event.getItem());
-
+            setUserCredentials(event.getItem());
+            UI.getCurrent().getPage().reload();
+            dialog.close();
         });
 
         Button button_switchToSignIn = new Button();
@@ -121,7 +125,7 @@ public class LayoutLogin {
         layout.setHorizontalComponentAlignment(FlexComponent.Alignment.CENTER, button_switchToSignIn);
         return layout;
     }
-
+    //TODO uncomment after tests :)
     private void buttonAction_switchToSignIn(boolean switchToSignIn){
         isCurrentSignIn = switchToSignIn;
 
@@ -139,9 +143,12 @@ public class LayoutLogin {
         newUser.setFirstName(userFirstName);
         newUser.setLastName(userLastName);
 
-        service.setCookies(service.postUser(newUser));
-
+        setUserCredentials(service.postUser(newUser));
+        UI.getCurrent().getPage().reload();
         dialog.close();
+    }
+    private void setUserCredentials(User user){
+        userInfo.setCredentials(user);
     }
 
 }

@@ -4,13 +4,15 @@ import com.vaadin.PersonalFinances.API.models.Statistics;
 import com.vaadin.PersonalFinances.API.models.Transaction;
 import com.vaadin.PersonalFinances.API.models.User;
 import com.vaadin.PersonalFinances.API.models.Wallet;
-import org.atmosphere.config.service.Post;
+
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.swing.text.html.StyleSheet;
 import java.util.*;
 
 
@@ -18,15 +20,16 @@ import java.util.*;
 public class UI_Http_Service {
 
     private final RestTemplate restTemplate;
-    private String UrlAPI = "http://localhost:8080/api/";
-    private String UrlWallets = "wallets/";
-    private String UrlUsers = "users/";
-    private String UrlTransactions = "transactions/";
-    private String UrlStatistics = "statistics/";
-    private String UrlCookieSet = "users/setCookies/";
-
+    private final String UrlAPI = "http://localhost:8080/api/";
+    private final String UrlWallets = "wallets/";
+    private final String UrlUsers = "users/";
+    private final String UrlTransactions = "transactions/";
+    private final String UrlStatistics = "statistics/";
+    private final String UrlCookieSet = "users/setCookies/";
+    private UserInfo userInfo;
     public UI_Http_Service(){
         this.restTemplate = new RestTemplate();
+        userInfo = new UserInfo();
     }
 
     public List<Wallet> getAllWallets()
@@ -46,7 +49,6 @@ public class UI_Http_Service {
         String url = UrlAPI + UrlWallets +id;
 
         Wallet response = restTemplate.getForObject(url, Wallet.class);
-
 
 
        return response;
@@ -77,9 +79,23 @@ public class UI_Http_Service {
 
         return restTemplate.postForObject(url, enity, Transaction.class);
     }
-    public List<Transaction> getWalletTransactions(String WalletId)
+    public List<Transaction> getExpenseWalletTransactions()
     {
-        String url = UrlAPI + UrlWallets +WalletId + "/" + UrlTransactions;
+        String WalletId = userInfo.getWalletId();
+        String url = UrlAPI + UrlWallets +WalletId + "/" + UrlTransactions + "expense";
+        //System.out.println("FULL URLS:"+ fullUrl);
+
+        Transaction[] response = restTemplate.getForObject(url, Transaction[].class);
+
+        List<Transaction> transactionsList = Arrays.asList(response);
+
+        //System.out.println("dlusgosc: "+ walletsList.size()+" ");
+
+        return transactionsList;
+    }public List<Transaction> getIncomeWalletTransactions()
+    {
+        String WalletId = userInfo.getWalletId();
+        String url = UrlAPI + UrlWallets +WalletId + "/" + UrlTransactions + "income";
         //System.out.println("FULL URLS:"+ fullUrl);
 
         Transaction[] response = restTemplate.getForObject(url, Transaction[].class);
@@ -90,9 +106,20 @@ public class UI_Http_Service {
 
         return transactionsList;
     }
-    public Statistics getStatisticsForWallet()
+    public Statistics getExpenseStatisticsForWallet()
     {
-        String url = UrlAPI + UrlWallets +new UserInfo().getWalletId() + "/" + UrlStatistics;
+        String url = UrlAPI + UrlWallets +new UserInfo().getWalletId() + "/" + UrlStatistics + "expense";
+        //System.out.println("FULL URLS:"+ url);
+
+        Statistics response = restTemplate.getForObject(url, Statistics.class);
+
+
+
+        return response;
+    }
+    public Statistics getIncomeStatisticsForWallet()
+    {
+        String url = UrlAPI + UrlWallets +new UserInfo().getWalletId() + "/" + UrlStatistics + "income";
         //System.out.println("FULL URLS:"+ url);
 
         Statistics response = restTemplate.getForObject(url, Statistics.class);
@@ -113,6 +140,13 @@ public class UI_Http_Service {
         //System.out.println("dlusgosc: "+ walletsList.size()+" ");
 
         return usersList;
+    }
+    public User getUser(String userId){
+        String url = UrlAPI + UrlUsers + userId;
+
+        User response = restTemplate.getForObject(url, User.class);
+
+        return response;
     }
     /*
     public void getOne(String endPoint, String id)
@@ -136,17 +170,30 @@ public class UI_Http_Service {
         // set `accept` header
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 
-        HttpEntity<User> enity = new HttpEntity<>(user, headers);
+        HttpEntity<User> entity = new HttpEntity<>(user, headers);
 
-        return restTemplate.postForObject(url, enity, User.class);
+        return restTemplate.postForObject(url, entity, User.class);
     }
-    public void setCookies(User user){
-        String url = UrlAPI + "/users/change-username"; //+ user.getId();
+    public void setCookies(){
+        String url = UrlAPI + "/users/change-username";
         System.out.println("setCookies UI_");
+
+        RestTemplate template = new RestTemplate();
+        User user = new User();
+        user.setWalletId("lmao");
+
+        HttpEntity<User> request = new HttpEntity<>(user);
+        HttpEntity<String> response = template.exchange(url, HttpMethod.POST, request,String.class);
+
+        System.out.println(response);
+
+    }
+    public void checkCookies(){
+        String url = UrlAPI + "/users/all-cookies";
+        System.out.println("checkCoockies:");
 
 
 
         restTemplate.getForObject(url, String.class);
     }
-
 }

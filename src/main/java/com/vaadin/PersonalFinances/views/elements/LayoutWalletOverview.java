@@ -27,7 +27,7 @@ public class LayoutWalletOverview {
         h2.setSizeFull();
 
 
-        h1.add(panel(), panel());
+        h1.add(panel(), userPanel());
         h2.add(panel(),panel());
         main.add(h1,h2);
 
@@ -53,6 +53,24 @@ public class LayoutWalletOverview {
 
         return verticalLayout;
     }
+    VerticalLayout userPanel(){
+        VerticalLayout verticalLayout = new VerticalLayout();
+        verticalLayout.setSizeFull();
+        verticalLayout.addClassName("panel");
+
+        Label userinfo = new Label("User info:");
+        userinfo.addClassName("accountBalace");
+
+        Label firstName = new Label(  getFirstName());
+        firstName.addClassName("userinfo");
+
+        Label lastName = new Label(  getLastName());
+        lastName.addClassName("userinfo");
+
+        verticalLayout.add(userinfo, firstName, lastName);
+
+        return verticalLayout;
+    }
     BigDecimal getBalance(){
         try{
             return walletController.getWalletBalance();
@@ -61,6 +79,19 @@ public class LayoutWalletOverview {
             return BigDecimal.ZERO;
         }
 
-
+    }
+    String getFirstName(){
+        try{
+            return walletController.getFirstName();
+        }catch (Exception e){
+            return "null";
+        }
+    }
+    String getLastName(){
+        try{
+            return walletController.getLastName();
+        }catch (Exception e){
+            return "null";
+        }
     }
 }
