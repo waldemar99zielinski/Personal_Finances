@@ -33,16 +33,14 @@ public class MainView extends AppLayout implements BeforeEnterObserver {
         addMenuTab("Add transaction", AddTransactionView.class, new Icon(VaadinIcon.PLUS));
         addMenuTab("List", TransactionListView.class,new Icon(VaadinIcon.LINES));
         addMenuTab("Stats", StatsView.class,new Icon(VaadinIcon.BAR_CHART));
+        //addMenuTab("Calendar", CalendarView.class,new Icon(VaadinIcon.CALENDAR));
         tabs.setOrientation(Tabs.Orientation.VERTICAL);
 
-
+        addToDrawer(tabs);
 
         login = new Button("Login");
 
         login.addClickListener(event -> new LayoutLogin().dialogAction());
-
-        addToDrawer(tabs);
-
 
         addToNavbar(new DrawerToggle(),new Label("personal finances"), login);
         login.getStyle().set("margin-left", "auto");

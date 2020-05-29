@@ -1,9 +1,11 @@
 package com.vaadin.PersonalFinances.API.models;
 
+import com.vaadin.PersonalFinances.API.models.currencyModels.Currencies;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 @Document(collection = "Wallets")
 public class Wallet {
@@ -12,8 +14,14 @@ public class Wallet {
 
     private BigDecimal balance;
 
+    private String currency;
+
+
+
     public Wallet() {
         this.balance = BigDecimal.ZERO;
+        this.currency = Currencies.USD.toString();
+        //this.balance.setScale(2);
     }
 
     public String getId(){
@@ -25,7 +33,20 @@ public class Wallet {
     }
 
     public void setBalance(BigDecimal balance) {
-        this.balance = balance;
+        this.balance = balance.setScale(2, RoundingMode.DOWN);
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+    public void changeCurrency(String currency, BigDecimal currencyExchangeValue){
+        System.out.println("Wallet: changeCurrency: " + currency + currencyExchangeValue);
+        setCurrency(currency);
+        setBalance(balance.multiply(currencyExchangeValue));
     }
 
     public void setBalanceAddingTransaction(Transaction transaction) {

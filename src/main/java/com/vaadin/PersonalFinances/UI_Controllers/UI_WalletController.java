@@ -41,4 +41,11 @@ public class UI_WalletController {
     public String getLastName(){
         return service.getUser(userInfo.getUserId()).getLastName();
     }
+    public Wallet getWallet(){
+        return  service.getWallet(userInfo.getWalletId());
+
+    }
+    public Wallet changeWalletCurrency(String newCurrency){
+        return service.changeWalletCurrency(userInfo.getWalletId(), newCurrency);
+    }
 }

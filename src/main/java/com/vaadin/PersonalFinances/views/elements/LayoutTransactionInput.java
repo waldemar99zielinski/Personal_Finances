@@ -17,6 +17,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
 
@@ -189,7 +190,7 @@ public class LayoutTransactionInput {
     private Transaction createTransactionObject(){
         Transaction transaction = new Transaction();
 
-        transaction.setAmountOfMoney(this.transactionPrice);
+        transaction.setAmountOfMoney(this.transactionPrice.setScale(2, RoundingMode.HALF_UP));
         transaction.setCategory(this.transactionCategory);
         transaction.setTitle(this.transactionTitle);
 

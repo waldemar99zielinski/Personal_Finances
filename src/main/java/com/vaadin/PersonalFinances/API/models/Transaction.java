@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.Date;
 
 @Document(collection = "Transactions")
@@ -25,6 +26,9 @@ public class Transaction {
     private BigDecimal amountOfMoney;
 
     private String walletId;
+
+    private String currency;
+
     public Transaction(){
 
     }
@@ -92,5 +96,13 @@ public class Transaction {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 }

@@ -174,26 +174,12 @@ public class UI_Http_Service {
 
         return restTemplate.postForObject(url, entity, User.class);
     }
-    public void setCookies(){
-        String url = UrlAPI + "/users/change-username";
-        System.out.println("setCookies UI_");
+    public Wallet changeWalletCurrency(String walletId, String currencyToChange){
+        String url = UrlAPI + UrlWallets + walletId + "/changeCurrency/"+currencyToChange;
+        System.out.println("UI_Http: changeWalletCurrency: "+url);
+        Wallet response = restTemplate.getForObject(url, Wallet.class);
 
-        RestTemplate template = new RestTemplate();
-        User user = new User();
-        user.setWalletId("lmao");
+        return response;
 
-        HttpEntity<User> request = new HttpEntity<>(user);
-        HttpEntity<String> response = template.exchange(url, HttpMethod.POST, request,String.class);
-
-        System.out.println(response);
-
-    }
-    public void checkCookies(){
-        String url = UrlAPI + "/users/all-cookies";
-        System.out.println("checkCoockies:");
-
-
-
-        restTemplate.getForObject(url, String.class);
     }
 }

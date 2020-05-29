@@ -21,6 +21,14 @@
 
     text-shadow: rgba(28,110,164,0.5) 2px 2px 2px;
 }
+.negativeMoney {
+    font-family: "Georgia", serif;
+    text-align: center;
+    font-size: 75px;
+    color: #AF2222;
+
+    text-shadow: rgba(28,110,164,0.5) 2px 2px 2px;
+}
 .userinfo {
     font-family: "Georgia", serif;
     text-align: left;

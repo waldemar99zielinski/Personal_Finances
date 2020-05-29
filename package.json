@@ -18,5 +18,5 @@
     "@babel/core": "^7.8.7",
     "yaml": "^1.7.2"
   },
-  "vaadinAppPackageHash": "9d9bc2480584d756ef263b6be0f25abb7e5600d603d5de175cb6381bcf3f322c"
+  "vaadinAppPackageHash": "065bf71e259dd92be07099e239ee7c36d7191ddf85616a35077a39c6de9d1ad4"
 }

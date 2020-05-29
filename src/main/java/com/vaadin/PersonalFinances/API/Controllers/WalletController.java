@@ -58,7 +58,7 @@ public class WalletController {
     public Transaction postWalletTransaction(@PathVariable("walletId") String walletId, @RequestBody Transaction transaction){
 
         transaction.setWalletId(walletId);
-
+        transaction.setCurrency(walletService.getWallet(walletId).get().getCurrency());
         return transactionService.createTransaction(transaction);
     }
     @GetMapping(value = "/{walletId}/statistics/expense")
@@ -68,6 +68,20 @@ public class WalletController {
     @GetMapping(value = "/{walletId}/statistics/income")
     public Statistics getIncomeStatisticsForWallet(@PathVariable("walletId") String walletId){
         return statisticsService.getIncomeStatisticsForWallet(walletId);
+    }
+    //TODO: test
+    @GetMapping(value = "/{walletId}/changeCurrency/{newCurrency}")
+    public Wallet changeCurrency(@PathVariable("walletId") String walletId, @PathVariable("newCurrency") String newCurrency){
+        System.out.println("WalletController: changeCurrency: "+walletId+" "+ newCurrency);
+
+        try{
+            return walletService.changeWalletCurrency(walletId, newCurrency).get();
+        }catch (Exception e){
+            System.out.println("Exception: WalletController: changeCurrency: "+ e.getMessage());
+            return null;
+        }
+
+
     }
 
 }

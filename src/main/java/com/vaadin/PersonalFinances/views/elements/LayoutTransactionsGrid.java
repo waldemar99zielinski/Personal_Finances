@@ -40,6 +40,7 @@ public class LayoutTransactionsGrid {
         grid.addColumn(Transaction::getCategory).setHeader("Category");
         grid.addColumn(Transaction::getType).setHeader("Type");
         grid.addColumn(Transaction::getAmountOfMoney).setHeader("Value");
+        grid.addColumn(Transaction::getCurrency).setHeader("Currency");
         grid.addColumn(Transaction::getDate).setHeader("Date");
         grid.addThemeVariants(GridVariant.LUMO_NO_BORDER,
                 GridVariant.LUMO_NO_ROW_BORDERS, GridVariant.LUMO_ROW_STRIPES);
