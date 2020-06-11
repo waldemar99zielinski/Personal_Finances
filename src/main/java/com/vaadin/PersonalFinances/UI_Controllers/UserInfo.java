@@ -17,7 +17,7 @@ public class UserInfo {
 
     public UserInfo(){
 
-        
+
         loadCredentials();
     }
     public void setUser(User user){

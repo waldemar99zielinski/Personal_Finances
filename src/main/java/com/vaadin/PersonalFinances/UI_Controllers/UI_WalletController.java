@@ -41,7 +41,7 @@ public class UI_WalletController {
     }
     public Wallet getWallet(){
         try{
-            System.out.println("userinfo: "+userInfo.getWalletId());
+            
 
             return  service.getWallet(userInfo.getWalletId());
         }
