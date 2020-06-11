@@ -1,5 +1,6 @@
 package com.vaadin.PersonalFinances.UI_Controllers;
 
+import com.vaadin.PersonalFinances.API.ErrorHandling.WalletError;
 import com.vaadin.PersonalFinances.API.models.Statistics;
 import com.vaadin.PersonalFinances.API.models.Transaction;
 import com.vaadin.PersonalFinances.API.models.Wallet;
@@ -25,10 +26,7 @@ public class UI_WalletController {
             return false;
         }
     }
-    public BigDecimal getWalletBalance(){
 
-        return service.getWallet(userInfo.getWalletId()).getBalance();
-    }
     public Statistics getExpenseWalletStatistics(){
         return service.getExpenseStatisticsForWallet();
     }
@@ -42,7 +40,16 @@ public class UI_WalletController {
         return service.getUser(userInfo.getUserId()).getLastName();
     }
     public Wallet getWallet(){
-        return  service.getWallet(userInfo.getWalletId());
+        try{
+            System.out.println("userinfo: "+userInfo.getWalletId());
+
+            return  service.getWallet(userInfo.getWalletId());
+        }
+        catch (Exception e){
+            System.out.println("UI_WalletController: getWallet: Exception: " + e.getMessage());
+            return new WalletError().getErrorBody();
+
+        }
 
     }
     public Wallet changeWalletCurrency(String newCurrency){

@@ -125,11 +125,16 @@ public class LayoutTransactionInput {
         }
         if(!validateTitleInput()){
             layout.add(titleErrorMessage);
+
         }
         if(validatePriceInput() && validateTitleInput()){
             layout.add(succesfullMessage);
+
         }
 
+        Button closeButton = new Button("Close");
+        closeButton.addClickListener(event -> dialog.close());
+        layout.add(closeButton);
 
 
         dialog.add(layout);

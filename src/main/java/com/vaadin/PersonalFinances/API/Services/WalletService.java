@@ -7,7 +7,6 @@ import com.vaadin.PersonalFinances.API.models.currencyModels.ExchangeRatesInform
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -50,13 +49,14 @@ public class WalletService {
     }
     public Optional<Wallet> changeWalletCurrency(String walletId, String currencyToChange){
         Optional<Wallet> walletToUpdate = repository.findById(walletId);
+        //System.out.println(walletToUpdate.isPresent());
         if(walletToUpdate.isPresent()){
             ExchangeRatesInformation exchangeRatesInformation = currencyExchangeService.getCurrencyExchangeRatesInformation(walletToUpdate.get().getCurrency());
-            System.out.println("WalletService: changeWalletCurrency"+"USD: "+exchangeRatesInformation.getRates().getUSD() + " PLN: "+exchangeRatesInformation.getRates().getPLN());
+            //System.out.println("WalletService: changeWalletCurrency"+"USD: "+exchangeRatesInformation.getRates().getUSD() + " PLN: "+exchangeRatesInformation.getRates().getPLN());
             String currentCurrency = walletToUpdate.get().getCurrency();
-            System.out.println(exchangeRatesInformation.getRates().getExchangeValue(currencyToChange));
+            //System.out.println(exchangeRatesInformation.getRates().getExchangeValue(currencyToChange));
             walletToUpdate.get().changeCurrency(currencyToChange, exchangeRatesInformation.getRates().getExchangeValue(currencyToChange));
-            System.out.println("WalletService: changeWalletCurrency: after changeCurrency : wallet getBalace : "+walletToUpdate.get().getBalance()+ walletToUpdate.get().getCurrency());
+            //System.out.println("WalletService: changeWalletCurrency: after changeCurrency : wallet getBalace : "+walletToUpdate.get().getBalance()+ walletToUpdate.get().getCurrency());
             repository.save(walletToUpdate.get());
         }
         return walletToUpdate;

@@ -22,7 +22,7 @@ public class TransactionListView extends VerticalLayout {
 
         setSizeFull();
 
-        add(layoutTransactionsGrid.getGrid("expenses"));
+        add(layoutTransactionsGrid.getGrid());
 
     }
 

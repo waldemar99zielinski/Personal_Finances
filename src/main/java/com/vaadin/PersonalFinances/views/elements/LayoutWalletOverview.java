@@ -2,6 +2,9 @@ package com.vaadin.PersonalFinances.views.elements;
 
 import com.vaadin.PersonalFinances.API.models.Wallet;
 import com.vaadin.PersonalFinances.API.models.currencyModels.Currencies;
+import com.vaadin.PersonalFinances.API.models.currencyModels.ExchangeRatesInformation;
+import com.vaadin.PersonalFinances.UI_Controllers.UI_CurrencyExchangeService;
+import com.vaadin.PersonalFinances.UI_Controllers.UI_UserController;
 import com.vaadin.PersonalFinances.UI_Controllers.UI_WalletController;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -19,9 +22,11 @@ import java.util.Optional;
 public class LayoutWalletOverview {
     UI_WalletController walletController;
     Wallet wallet;
+    UI_UserController userController;
     public LayoutWalletOverview(){
-        this.walletController = new UI_WalletController();
-        this.wallet = getWallet();
+        walletController = new UI_WalletController();
+        userController = new UI_UserController();
+        wallet = getWallet();
     }
     public VerticalLayout returnLayout(){
         VerticalLayout main = new VerticalLayout();
@@ -30,12 +35,14 @@ public class LayoutWalletOverview {
 
         HorizontalLayout h1 = new HorizontalLayout();
         h1.setSizeFull();
+        h1.setHeight("50%");
         HorizontalLayout h2 = new HorizontalLayout();
         h2.setSizeFull();
+        h2.setHeight("50%");
 
 
         h1.add(panel(), userPanel());
-        h2.add(currencyExchangePanel(),panel());
+        h2.add(currencyExchangePanel(),currencyExchangeValuesPanel());
         main.add(h1,h2);
 
         return main;
@@ -93,7 +100,7 @@ public class LayoutWalletOverview {
         Label currencyLabel = new Label("Currency");
         currencyLabel.addClassName("accountBalace");
 
-        Label currentCurrencyLabel = new Label("current: " + wallet.getCurrency());
+        Label currentCurrencyLabel = new Label("current: " + getCurrency());
         currentCurrencyLabel.addClassName("userinfo");
 
         Label convertCurrencyLabel = new Label("convert:");
@@ -101,54 +108,68 @@ public class LayoutWalletOverview {
 
         Select<Currencies> currencySelect = new Select<>();
         currencySelect.setItems(Currencies.values());
-        currencySelect.setValue(Currencies.valueOf(wallet.getCurrency()));
+        currencySelect.setValue(Currencies.valueOf(getCurrency()));
 
         Button convertButton = new Button("Convert");
         convertButton.addClickListener(event -> {
             convertCurrencyButtonAction(currencySelect.getValue().toString());
         });
 
-        verticalLayout.add(currencyLabel, currentCurrencyLabel, convertCurrencyLabel, currencySelect, convertButton);
+
+        verticalLayout.add(currencyLabel, currentCurrencyLabel, convertCurrencyLabel, new HorizontalLayout(currencySelect, convertButton));
+
+        return verticalLayout;
+    }
+    VerticalLayout currencyExchangeValuesPanel(){
+        VerticalLayout verticalLayout = new VerticalLayout();
+        verticalLayout.setSizeFull();
+        verticalLayout.addClassName("panel");
+
+        ExchangeRatesInformation exchangeRatesInformation = new UI_CurrencyExchangeService().getExchangeRatesInformation();
+
+        Label currencyLabel = new Label("Exchange rates");
+        currencyLabel.addClassName("accountBalace");
+
+        Label cnyLabel = new Label("CNY: "+ exchangeRatesInformation.getRates().getCNY());
+        cnyLabel.addClassName("userinfo");
+
+        Label gbpLabel = new Label("GBP: "+ exchangeRatesInformation.getRates().getGBP());
+        gbpLabel.addClassName("userinfo");
+
+        Label usdLabel = new Label("USD: "+ exchangeRatesInformation.getRates().getUSD());
+        usdLabel.addClassName("userinfo");
+
+        Label plnLabel = new Label("PLN: "+ exchangeRatesInformation.getRates().getPLN());
+        plnLabel.addClassName("userinfo");
+
+
+
+        verticalLayout.add(currencyLabel,cnyLabel,gbpLabel,usdLabel,plnLabel);
 
         return verticalLayout;
     }
     BigDecimal getBalance(){
-        try{
-            return walletController.getWalletBalance();
-        }catch (Exception e){
 
-            return BigDecimal.ZERO;
-        }
+            return walletController.getWallet().getBalance();
+
 
     }
     String getCurrency(){
-        try{
-            return walletController.getWallet().getCurrency();
-        }catch (Exception e){
 
-            return null;
-        }
+            return walletController.getWallet().getCurrency();
     }
     String getFirstName(){
-        try{
-            return walletController.getFirstName();
-        }catch (Exception e){
-            return "null";
-        }
+
+            return userController.getUser().getFirstName();
+
     }
     String getLastName(){
-        try{
-            return walletController.getLastName();
-        }catch (Exception e){
-            return "null";
-        }
+        return userController.getUser().getLastName();
     }
     Wallet getWallet(){
-        try{
+
             return walletController.getWallet();
-        }catch (Exception e){
-            return null;
-        }
+
     }
     void convertCurrencyButtonAction(String newCurrency){
         walletController.changeWalletCurrency(newCurrency);

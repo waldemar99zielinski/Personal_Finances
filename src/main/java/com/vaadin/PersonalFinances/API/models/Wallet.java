@@ -33,7 +33,9 @@ public class Wallet {
     }
 
     public void setBalance(BigDecimal balance) {
-        this.balance = balance.setScale(2, RoundingMode.DOWN);
+        this.balance = balance;
+        this.balance = this.balance.setScale(2, RoundingMode.DOWN);
+        //System.out.println("Wallet: setBalance : balance: "+ this.balance);
     }
 
     public String getCurrency() {
@@ -44,7 +46,7 @@ public class Wallet {
         this.currency = currency;
     }
     public void changeCurrency(String currency, BigDecimal currencyExchangeValue){
-        System.out.println("Wallet: changeCurrency: " + currency + currencyExchangeValue);
+        //System.out.println("Wallet: changeCurrency: " + currency + currencyExchangeValue);
         setCurrency(currency);
         setBalance(balance.multiply(currencyExchangeValue));
     }
@@ -58,7 +60,7 @@ public class Wallet {
             //System.out.println("model Wallet: setBalanceAddingTransaction :: income");
             this.balance = this.balance.add(transaction.getAmountOfMoney());
         }
-
+        this.balance = this.balance.setScale(2, RoundingMode.DOWN);
 
     }
 }

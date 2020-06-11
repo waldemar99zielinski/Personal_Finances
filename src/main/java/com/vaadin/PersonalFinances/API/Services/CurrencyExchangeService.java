@@ -2,17 +2,11 @@ package com.vaadin.PersonalFinances.API.Services;
 
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.vaadin.PersonalFinances.API.ErrorHandling.CurrencyExchangeError;
 import com.vaadin.PersonalFinances.API.models.currencyModels.ExchangeRatesInformation;
-import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-import java.math.BigDecimal;
 
 @Service
 public class CurrencyExchangeService {
@@ -25,11 +19,13 @@ public class CurrencyExchangeService {
     }
 
     public ExchangeRatesInformation getCurrencyExchangeRatesInformation(String baseCurrency){
-        String urlWithBaseCurrency = url+baseCurrency;
 
-        ExchangeRatesInformation exchange = getRestTemplate().getForObject(urlWithBaseCurrency, ExchangeRatesInformation.class);
-        //System.out.println("CurrencyExchangeService: ExchangeRatesInformation url:"+urlWithBaseCurrency + exchange.getRates().getPLN() + " "+exchange.getRates().getUSD());
-        return exchange;
+            String urlWithBaseCurrency = url + baseCurrency;
+
+            ExchangeRatesInformation exchange = getRestTemplate().getForObject(urlWithBaseCurrency, ExchangeRatesInformation.class);
+            //System.out.println("CurrencyExchangeService: ExchangeRatesInformation url:"+urlWithBaseCurrency + exchange.getRates().getPLN() + " "+exchange.getRates().getUSD());
+            return exchange;
+
     }
 
     private ObjectMapper objectMapper() {

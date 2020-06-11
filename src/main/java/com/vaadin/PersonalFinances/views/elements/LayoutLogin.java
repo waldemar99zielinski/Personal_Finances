@@ -107,7 +107,7 @@ public class LayoutLogin {
         grid_users.setItems(service.getAllUsers());
         grid_users.addColumn(User::getFirstName).setHeader("First name");
         grid_users.addColumn(User::getLastName).setHeader("Last name");
-        //TODO
+
         grid_users.addItemClickListener(event -> {
             setUserCredentials(event.getItem());
             UI.getCurrent().getPage().reload();
@@ -125,7 +125,7 @@ public class LayoutLogin {
         layout.setHorizontalComponentAlignment(FlexComponent.Alignment.CENTER, button_switchToSignIn);
         return layout;
     }
-    //TODO uncomment after tests :)
+
     private void buttonAction_switchToSignIn(boolean switchToSignIn){
         isCurrentSignIn = switchToSignIn;
 

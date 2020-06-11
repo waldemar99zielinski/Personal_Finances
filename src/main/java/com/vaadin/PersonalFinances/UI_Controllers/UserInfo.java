@@ -26,9 +26,12 @@ public class UserInfo {
     }
 
     public String getUserId() {
-        loadCredentials();
 
-        return userId;
+            loadCredentials();
+
+            return userId;
+
+
     }
 
     public void setUserId(String userId) {
@@ -54,7 +57,9 @@ public class UserInfo {
             scanner.close();
             //System.out.println("userInfo: loadCredentials:" +userId + " "+walletId);
         }catch (IOException e){
-            System.out.println(e.getMessage());
+            userId = "null";
+            walletId = "null";
+            System.out.println("Userinfo: loadCredentials: Exception: "+ e.getMessage());
         }
     }
     public void setCredentials(User user){
@@ -63,7 +68,7 @@ public class UserInfo {
             fileWriter.write(user.getId()+ "\n" + user.getWalletId());
             fileWriter.close();
         }catch (IOException e){
-            System.out.println("userInfo: setCredentials\n"+e.getMessage());
+            System.out.println("userInfo: setCredentials: Exception: "+e.getMessage());
         }
     }
 }

@@ -43,7 +43,7 @@ public class UserCredentialsValidationService {
             }
             return true;
         }catch (Exception e){
-            System.out.println("UserCredentialsValidationService: areCredentialsValid:\n"+e.getMessage());
+            System.out.println("UserCredentialsValidationService: areCredentialsValid: "+e.getMessage());
             return false;
         }
     }

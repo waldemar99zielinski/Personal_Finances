@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,10 +41,10 @@ public class TransactionService {
     }
     public Collection<Transaction> getExpenseTransactionsForWallet(String walletId){
         Collection<Transaction> transactionList = transactionRepository.findByWalletId(walletId);
-
+        Predicate<Transaction> byTypeExpense = transaction -> transaction.getType().equals("expense");
         return transactionList
                 .stream()
-                .filter(e -> e.getType().equals("expense"))
+                .filter(byTypeExpense)
                 .collect(Collectors.toList());
     }
     public Collection<Transaction> getIncomeTransactionsForWallet(String walletId){

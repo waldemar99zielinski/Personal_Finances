@@ -53,23 +53,23 @@ public class StatsView extends Div {
         setSizeFull();
 
 
-        Tab tab2 = new Tab("Expenses");
-        Div page2 = new Div();
-        page2.add(new LayoutStats().expenses());
-        page2.setVisible(true);
+        Tab expenses = new Tab("Expenses");
+        Div page_expenses = new Div();
+        page_expenses.add(new LayoutStats().expenses());
+        page_expenses.setVisible(true);
 
-        Tab tab3 = new Tab("Incomes");
-        Div page3 = new Div();
-        page3.add(new LayoutStats().incomes());
-        page3.setVisible(false);
+        Tab incomes = new Tab("Incomes");
+        Div page_incomes = new Div();
+        page_incomes.add(new LayoutStats().incomes());
+        page_incomes.setVisible(false);
 
         Map<Tab, Component> tabsToPages = new HashMap<>();
 
-        tabsToPages.put(tab2, page2);
-        tabsToPages.put(tab3, page3);
-        Tabs tabs = new Tabs(tab2, tab3);
-        Div pages = new Div( page2, page3);
-        Set<Component> pagesShown = Stream.of(page2)
+        tabsToPages.put(expenses, page_expenses);
+        tabsToPages.put(incomes, page_incomes);
+        Tabs tabs = new Tabs(expenses, incomes);
+        Div pages = new Div( page_expenses, page_incomes);
+        Set<Component> pagesShown = Stream.of(page_expenses)
                 .collect(Collectors.toSet());
 
         tabs.addSelectedChangeListener(event -> {
