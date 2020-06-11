@@ -24,7 +24,7 @@ public class UserService {
     }
 
     public User createUser(User user) {
-        Wallet newWallet =walletService.createWallet();
+        Wallet newWallet = walletService.createWallet();
         user.setWalletId(newWallet.getId());
         return userRepository.insert(user);
     }

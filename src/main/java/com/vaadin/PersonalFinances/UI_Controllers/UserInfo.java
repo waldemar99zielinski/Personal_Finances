@@ -17,7 +17,7 @@ public class UserInfo {
 
     public UserInfo(){
 
-        //this.walletId = "5ea408cafeb8764046ad7de2";
+        
         loadCredentials();
     }
     public void setUser(User user){

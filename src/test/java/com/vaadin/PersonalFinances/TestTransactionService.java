@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class APITest {
+public class TestTransactionService {
 
 
     @Autowired
@@ -42,23 +42,25 @@ public class APITest {
 
 
     @Test
-    public void getUsersTest() throws Exception {
-        when(userRepository.findAll()).thenReturn(Stream
-                .of(new User(), new User(), new User()).collect(Collectors.toList()));
-        assertEquals(3, userService.getUsers().size());
-    }
-    @Test
-    public void createUser() throws Exception {
-        User testUser = new User("firstName", "lastName", "walletId");
-        when(userRepository.insert(testUser)).thenReturn(testUser);
-        assertEquals("firstName", userService.createUser(testUser).getFirstName());
-        assertEquals("lastName", userService.createUser(testUser).getLastName());
-    }
-    @Test
-    public void createTransaction() throws Exception {
+    public void createTransactionType() throws Exception {
         Transaction testTransaction = new Transaction("title", "Food", new Date(), "expense", BigDecimal.valueOf(20), "walletId");
         when(transactionRepository.insert(testTransaction)).thenReturn(testTransaction);
         assertEquals("expense", transactionRepository.insert(testTransaction).getType());
+
+    }
+    @Test
+    public void createTransactionCategory() throws Exception {
+        Transaction testTransaction = new Transaction("title", "Food", new Date(), "expense", BigDecimal.valueOf(20), "walletId");
+        when(transactionRepository.insert(testTransaction)).thenReturn(testTransaction);
+        assertEquals("Food", transactionRepository.insert(testTransaction).getCategory());
+
+    }
+    @Test
+    public void createTransactionMoney() throws Exception {
+        Transaction testTransaction = new Transaction("title", "Food", new Date(), "expense", BigDecimal.valueOf(20.12), "walletId");
+        when(transactionRepository.insert(testTransaction)).thenReturn(testTransaction);
+
+        assertEquals(BigDecimal.valueOf(20.12), transactionRepository.insert(testTransaction).getAmountOfMoney());
 
     }
     @Test
@@ -67,21 +69,8 @@ public class APITest {
         assertEquals(2, transactionService.getTransactions().size());
 
     }
-    @Test
-    public void findUserById() throws Exception{
-        User userToFind = new User("firstName", "lastName", "walletId");
-        when(userRepository.findById("userId")).thenReturn(java.util.Optional.of(userToFind));
-        assertEquals(userToFind, userService.getUser("userId").get());
-    }
-    /*
-    @Test
-    public void getTransactionForWalletTest() throws Exception{
-        Transaction testTransaction = new Transaction("title", "Food", new Date(), "expense", BigDecimal.valueOf(20), "walletId");
-        when(transactionRepository.findByWalletId("walletId")).thenReturn(Collections.singleton(testTransaction));
 
-        assertEquals(testTransaction.getTitle(), transactionService.getTransactionsForWallet("walletId"));
-    }
-    */
+
 
 
 

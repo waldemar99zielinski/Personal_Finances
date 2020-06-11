@@ -92,7 +92,7 @@ public class WalletController {
 
     @GetMapping(value = "/{walletId}/changeCurrency/{newCurrency}")
     public ResponseEntity<Wallet> changeCurrency(@PathVariable("walletId") String walletId, @PathVariable("newCurrency") String newCurrency){
-        System.out.println("WalletController: changeCurrency: "+walletId+" "+ newCurrency);
+        //System.out.println("WalletController: changeCurrency: "+walletId+" "+ newCurrency);
 
         try{
             return new ResponseEntity<>(walletService.changeWalletCurrency(walletId, newCurrency).get(), HttpStatus.OK);

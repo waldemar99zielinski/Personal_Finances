@@ -21,7 +21,7 @@ public class Wallet {
     public Wallet() {
         this.balance = BigDecimal.ZERO;
         this.currency = Currencies.USD.toString();
-        //this.balance.setScale(2);
+
     }
 
     public String getId(){

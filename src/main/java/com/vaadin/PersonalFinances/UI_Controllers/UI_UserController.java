@@ -17,7 +17,7 @@ public class UI_UserController {
     public User getUser(){
         try{
             String url = urlApi + userInfo.getUserId();
-            System.out.println("UI_userController path:" + url);
+           // System.out.println("UI_userController path:" + url);
             ResponseEntity<User> response = restTemplate.getForEntity(url, User.class);
             return response.getBody();
         }catch (Exception e){

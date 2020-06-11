@@ -151,15 +151,21 @@ public class UI_Http_Service {
         return restTemplate.postForObject(url, entity, User.class);
     }
     public Wallet changeWalletCurrency(String walletId, String currencyToChange){
-        String url = UrlAPI + UrlWallets + walletId + "/changeCurrency/"+currencyToChange;
-        //System.out.println("UI_Http: changeWalletCurrency: "+url);
-       ResponseEntity<Wallet> response = restTemplate.getForEntity(url, Wallet.class);
-       if(response.getStatusCode().value() == HttpStatus.OK.value()){
-           return response.getBody();
-       }
-       //System.out.println(response.getStatusCode() + response.getHeaders().toString());
+        try{
+            String url = UrlAPI + UrlWallets + walletId + "/changeCurrency/"+currencyToChange;
+            //System.out.println("UI_Http: changeWalletCurrency: "+url);
+            ResponseEntity<Wallet> response = restTemplate.getForEntity(url, Wallet.class);
 
-        return null;
+            return response.getBody();
+        }catch (Exception e){
+            System.out.println("UI_Http: changeWalletCurrency: Exception: "+ e.getMessage());
+            return new WalletError().getErrorBody();
+        }
+
+
+
+
+
 
 
     }
