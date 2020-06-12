@@ -39,20 +39,5 @@ public class TransactionService {
 
         return transactionRepository.findByWalletId(walletId);
     }
-    public Collection<Transaction> getExpenseTransactionsForWallet(String walletId){
-        Collection<Transaction> transactionList = transactionRepository.findByWalletId(walletId);
-        Predicate<Transaction> byTypeExpense = transaction -> transaction.getType().equals("expense");
-        return transactionList
-                .stream()
-                .filter(byTypeExpense)
-                .collect(Collectors.toList());
-    }
-    public Collection<Transaction> getIncomeTransactionsForWallet(String walletId){
-        Collection<Transaction> transactionList = transactionRepository.findByWalletId(walletId);
 
-        return transactionList
-                .stream()
-                .filter(e -> e.getType().equals("income"))
-                .collect(Collectors.toList());
-    }
 }

@@ -41,7 +41,7 @@ public class UI_WalletController {
     }
     public Wallet getWallet(){
         try{
-            
+
 
             return  service.getWallet(userInfo.getWalletId());
         }

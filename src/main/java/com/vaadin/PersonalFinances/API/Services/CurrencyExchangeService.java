@@ -15,7 +15,7 @@ public class CurrencyExchangeService {
     RestTemplate restTemplate;
 
     public CurrencyExchangeService(){
-        //restTemplate = new getRestTemplate();
+
     }
 
     public ExchangeRatesInformation getCurrencyExchangeRatesInformation(String baseCurrency){

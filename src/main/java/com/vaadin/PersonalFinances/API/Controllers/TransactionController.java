@@ -19,10 +19,5 @@ public class TransactionController {
         return transactionService.getTransactions();
     }
 
-    /*@PostMapping
-    public Transaction postUser(@RequestBody Transaction transaction){
-        Date date = new Date();
-        transaction.setDate(date);
-        return transactionService.createTransaction(transaction);
-    }*/
+
 }
